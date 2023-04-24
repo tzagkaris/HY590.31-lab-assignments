@@ -2,7 +2,7 @@ import serial, sys
 
 f = open(sys.argv[3], 'w');
 # sample count
-samples = 500;
+samples = 5000;
 with serial.Serial(port=sys.argv[1], baudrate=sys.argv[2]) as ser:
     while ser.isOpen():
         print("On sample: " + str(samples))

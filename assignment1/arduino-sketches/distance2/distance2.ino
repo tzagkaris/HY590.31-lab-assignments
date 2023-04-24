@@ -68,5 +68,5 @@ void loop() {
   Serial.println(distance);
   
   // Delaying the code for 100 ms before the loop restarts.
-  delay(1000);
+  delay(300);
 }
