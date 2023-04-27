@@ -32,6 +32,8 @@ Spiridon Tzagkarakis ( csd4279 )
 
 
 
+
+
 ###### Spring, 2023 [ 24/04/23 ] 
 
 > Made using typora.
@@ -42,13 +44,13 @@ Spiridon Tzagkarakis ( csd4279 )
 
 Setup went as expected. Here are some photos from the assembly.
 
-![](./assets/signal-2023-04-24-105856_004.jpeg)
+![](./assets/top-view.jpeg)
 
 > Image 1: Device assembled and reading distance at reference 10cm.
 
 
 
-![](./assets/signal-2023-04-24-105754_004.jpeg)
+![](./assets/rear-view.jpeg)
 
 > Image 2: Device assembled and reading at reference 100cm.
 
@@ -60,7 +62,28 @@ Setup went as expected. Here are some photos from the assembly.
 
 > Distance was calculated using the formula : distance = ( duration * 0.034 ) / 2
 
-> TODO: VAG FILL THIS IN! 
+To calculate the drift, we did these steps, 
+
+- We averaged our first few measurements to find a baseline.   
+- For every point in our drift plot ( Yellow line ) we calculated the average in a window of 100 data points so that we can resolve the sensor's jitter. 
+
+So, for the first point we calculated the average of Data[0] to  Data[99], then for the second point we calculated from Data[1] to  Data[100] and so on... Our results show frequent fluctuation that go below and above the  baseline. This shows there is drift in the readings.
+
+
+
+The graphs bellow showcase those fluctuations ( Yellow line ):
+
+![](./assets/graph-10cm.png)
+
+> Fig 1: Drift on 10cm
+
+![](./assets/graph-25cm.png)
+
+> Fig 2: Drift on 25cm
+
+![](./assets/graph-100cm.png)
+
+> Fig 3: Drift on 100cm
 
 
 
@@ -77,15 +100,14 @@ For an object distance larger than 125 cm the readings were not reliable. The re
 
 2. B
 
-For objects that are not directly in front of it the sensor tends to either fail to recognise the object  or calculate a distance that is 10-15% greater than that of reference. 
+For objects that are not directly in front of it the sensor tends to either fail to recognize the object  or calculate a distance that is 10-15% greater than that of reference. 
 
 
 
-3.
+​	3.
 
-> TODO: VAG CHANGE IT IF IM WRONG
+ Yes, but not by directly placing the bigger object on top of the force sensor. We need smaller object to act as an intermediate first, an object to press down on the pad evenly. This is somewhat shown on the image bellow. The Nivea creme container is larger that the pad. Force is not detected by the sensor if it is placed in on the pad without an intermediate object. By having an intermediate object on top of the sensor ( the eraser ) and placing the container on top of it, we can measure its weight.
 
+![](./assets/container.jpeg)
 
-
-Yes, we can measure pressure from slightly larger areas by placing a "cover" on the sensor and by applying force evenly on that area. We can see someone doing exactly this [on this video](https://youtu.be/SX0636jmktM?t=667). He places the sensor in a 3D printed button that evenly presses down on the force sensor. 
-
+> Image 3:  Container on top of intermediate object.
