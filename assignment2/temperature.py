@@ -23,6 +23,8 @@ import serial
 import socket
 import json
 
+from datetime import datetime
+
 ##############################################
 ##                                          ##
 ##                Variables                 ##
@@ -31,6 +33,7 @@ import json
 # Network variables.
 id = 0 # Todo: Set your three digits from your LiU-ID here.
 host = '130.236.81.13'
+#host = '0.0.0.0'
 port = 8718
 sock = None;
 
@@ -177,6 +180,7 @@ def sendMeasurements():
         "id":id,
         "humidity": humidity,
         "temperature": temperature,
+        "time": str(datetime.now())
     }
     
     # Passes the request to a method that handes server connections.
@@ -208,6 +212,7 @@ def updateThreshold(type,value):
         "id":id,
         "type": type,
         "value": value,
+        "time": str(datetime.now())
     }
     
     # Passes the request to a method that handes server connections.
