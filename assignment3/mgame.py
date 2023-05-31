@@ -266,7 +266,9 @@ def wait_state():
     
     cunit_index = (cunit_index + 1)%len(gunits)
     if(pressed[cunit_index]):
-        game_won();
+        game_won(); # do staff and timeout for 5 secs
+        if gstate != STATE_IDLE: # WrongButtonPress might have already changed the state to idle
+            init_idle();
         return;
 
     cred_index = random.randrange(len(gunits))
@@ -278,6 +280,9 @@ def wait_state():
     ledControl(gunits[cred_index], LED_RED, LED_ON)
 
     time.sleep(WAIT_TIMEOUT)
+
+    ledControl(gunits[cunit_index], LED_AMBER, LED_OFF)
+    ledControl(gunits[cred_index], LED_RED, LED_OFF)
 
     if not pressed[cunit_index]:
         game_lost()
