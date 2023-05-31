@@ -27,15 +27,28 @@ PORT = 8716;
 GAME_CONTROL = 0; 
 LOOP_DELAY = 2; 
 
-# OTHER CONFIGURABLE ARGS
-STATE_IDLE = "IDLE"
-IDLE_TIMEOUT = 15
 
+STATE_IDLE = "IDLE"
+STATE_WAIT = "WAIT"
+
+LED_GREEN = "GREEN"
+LED_RED = "RED"
+LED_AMBER = "AMBER"
+
+LED_ON = "ON"
+LED_OFF = "OFF"
+
+# OTHER CONFIGURABLE ARGS
+IDLE_TIMEOUT = 15
+WAIT_TIMEOUT = 25
+GAME_LOST_TIMEOUT = 5
 
 # The current state of the game
 gstate = None;
 gunits = None;
-cunit_index = None; # the index of the unit we are waiting for click event.
+pressed = None;     # mark pressed/completed units
+cunit_index = None; # the index of the unit we are waiting for click event
+cred_index = None;  # the index of the button not to press
 
 # block till data arrives
 serial.Serial.timeout = None;
@@ -113,6 +126,7 @@ def GameListUnits():
     res = SendToHost(list_units_message);
     
     gunits = res["units"];
+    pressed = len(gunits) * [0];
     return;
 
 # check if response was successful
@@ -136,6 +150,22 @@ def StartNewGame():
     gstate = STATE_IDLE;
     return;
 
+def ledControl(unit, color, state):
+
+    msg = {
+        "led_state":state,
+        "led_color":color,
+        "from":unit_id,
+        "message_type":
+        "GameLEDControl",
+        "to":unit
+    }
+
+    SendToHost(msg)
+    return;
+    
+
+# __ONLY__ WHEN GAME CONTROL IS ACTIVE 
 # loop for init_idle. Loops through all units and sends an AMBER message to the 
 # current unit. After 15 secs, will move to the next unit, shutting down the prev one.
 # stop looping and end thread exec when gstate != STATE_IDLE
@@ -144,24 +174,7 @@ def idle_loop():
     len_units = len(gunits)
     unit_index = 0;
 
-    light_up_message = {
-        "led_state":"ON",
-        "led_color":"AMBER",
-        "from":unit_id,
-        "message_type":
-        "GameLEDControl",
-        "to":gunits[unit_index]
-    }
-    
-    light_down_message = {
-        "led_state":"OFF",
-        "led_color":"AMBER",
-        "from":unit_id,
-        "message_type":"GameLEDControl",
-        "to":gunits[unit_index]
-    }
-
-    SendToHost(copy.deepcopy(light_up_message));
+    ledControl(gunits[unit_index], LED_AMBER, LED_ON)
 
     while(gstate == STATE_IDLE):
         
@@ -171,18 +184,11 @@ def idle_loop():
         
         cunit_index = unit_index;
 
-        tldm = copy.deepcopy(light_down_message)
-        tlum = copy.deepcopy(light_up_message)
+        ledControl(gunits[last_index], LED_AMBER, LED_OFF)
+        ledControl(gunits[unit_index], LED_AMBER, LED_ON)
 
-        tldm["to"] = gunits[last_index];
-        SendToHost(tldm)
-        tlum["to"] = gunits[unit_index];
-        SendToHost(tlum)
+    ledControl(gunits[unit_index], LED_AMBER, LED_OFF)
 
-    light_down_copy = copy.deepcopy(light_down_message)
-    light_down_copy["to"] = gunits[unit_index];
-    
-    SendToHost(light_down_copy)
     return;
 
 # start a thread to handle idle state
@@ -203,7 +209,13 @@ def GameRegister():
 
 # unregister the unit_id in the host
 def GameUnregister():
-    pass;
+
+    game_register_message = {"unit_id":unit_id,"message_type":"GameRegister","registration_type":"unregister"}
+    res = SendToHost(game_register_message);
+    
+    success_check(res, "Game UnRegister Error!")
+
+    return;
 
 # get a list of tasks for this unit
 def GameGetTasks():
@@ -226,9 +238,105 @@ def handleChangeLed():
 def handlePlaySound():
     pass;
 
-# __ONLY__ WHEN GAME CONTROL IS ACTIVE 
-def handleGameButtonPress(actions):
+def game_won():
+    # TODO
     pass;
+
+# __ONLY__ WHEN GAME CONTROL IS ACTIVE 
+# send led red to all units for 5 secs.
+def game_lost():
+
+    for u in gunits:
+        ledControl(u, LED_RED, LED_ON)
+    
+    time.sleep(GAME_LOST_TIMEOUT)
+
+    for u in gunits:
+        ledControl(u, LED_RED, LED_OFF)
+
+    return;
+
+# __ONLY__ WHEN GAME CONTROL IS ACTIVE 
+# pick the next cunit_index as yellow, pick a random unit as red
+# send appropriate signals, sleep for WAIT_TIMEOUT seconds
+# when woken up, close red and yellow leds and
+# if pressed array is not marked lose and 
+# go to IDLE state ( if not already in IDLE state ) | init idle_loop. 
+def wait_state():
+    
+    cunit_index = (cunit_index + 1)%len(gunits)
+    if(pressed[cunit_index]):
+        game_won();
+        return;
+
+    cred_index = random.randrange(len(gunits))
+    
+    while(cunit_index == cred_index):
+        cred_index = random.randrange(len(gunits))
+
+    ledControl(gunits[cunit_index], LED_AMBER, LED_ON)
+    ledControl(gunits[cred_index], LED_RED, LED_ON)
+
+    time.sleep(WAIT_TIMEOUT)
+
+    if not pressed[cunit_index]:
+        game_lost()
+        if gstate != STATE_IDLE: # WrongButtonPress might have already changed the state to idle
+            init_idle();
+
+# __ONLY__ WHEN GAME CONTROL IS ACTIVE 
+# light cunit_index GREEN, mark pressed and init the wait_state thread.
+def CorrectButtonPress():
+
+    pressed[cunit_index] = 1;
+    ledControl(gunits[cunit_index], LED_GREEN, LED_ON)
+    threading.Thread(target=wait_state, args=(1, ))
+
+    return;
+
+# __ONLY__ WHEN GAME CONTROL IS ACTIVE 
+# lose and go to IDLE state (if not already in IDLE state ) | init idle_loop.
+def WrongButtonPress():
+
+    game_lost(); # send led red to all units for 5 secs.
+    if gstate != STATE_IDLE: # wait state might have already changed the state to idle
+        init_idle();
+
+# __ONLY__ WHEN GAME CONTROL IS ACTIVE 
+# if on IDLE state | check "from" field | if "from" is the same as gunits[cunit_index] then 
+# go to wait state and init the wait_state thread.
+# 
+# if on WAIT state | check "from" field | 
+# if "from" is the same as gunits[cunit_index] then
+# light GREEN, mark pressed and init the wait_state thread.
+# ELSE
+# if "from" is the same as the unit we switched led RED then
+# lose and go to IDLE state (if not already ) | init idle_loop.
+def handleGameButtonPress(actions):
+
+    # loop through all button messages.
+    for action in actions: 
+
+        # skip if for some reason this button action does not involve you
+        if action["to"] != unit_id: continue;
+
+        match gstate: 
+            case "IDLE":
+                if action["from"] == gunits[cunit_index]:
+                    threading.Thread(target=wait_state, args=(1, ))
+
+            case "WAIT":
+                if action["from"] == gunits[cunit_index]:
+                    CorrectButtonPress();
+
+                elif action["from"] == gunits[cred_index]:
+                    WrongButtonPress();
+                
+                # else continue
+        time.sleep(1)
+
+
+    return;
 
 # handle available tasks / filter button events if needed.
 # return a list of required actions
@@ -249,10 +357,9 @@ def GameHandleTasks(tasks):
             case "CHANGE_LED": handleChangeLed(task);
             case "PLAY_SOUND": handlePlaySound(task);
 
-            # handle this only when you are game master
+            # append Button actions and process only if you are game master
             case "BUTTON_CHANGE": actions.append(task);
     
-
     return actions;
 
 
@@ -267,9 +374,11 @@ def main():
             GameListUnits() 
             StartNewGame()
             init_idle()
-    except Exception as err:
+    except (KeyboardInterrupt, SystemExit, Exception) as err:
         print("Initialization Error:")
-        print(err)
+        GameUnregister()
+        if not isinstance(err, (KeyboardInterrupt, SystemExit)):
+            print(err);
         exit(-1);
     
     # MAIN LOOP
@@ -280,14 +389,14 @@ def main():
             if GAME_CONTROL:
                 handleGameButtonPress(actions)
         
-        except Exception as err:
-            # what should be done when error happens ? ?
-            print("Game Loop Error:")
-            print(err);
+        except (KeyboardInterrupt, SystemExit, Exception) as err:
+            # unregister before exit
+            GameUnregister()
+            if not isinstance(err, (KeyboardInterrupt, SystemExit)):
+                print(err);
+            exit(-1);
 
         time.sleep(LOOP_DELAY);
-
-    #GameUnregister()
                     
 
 if __name__ == '__main__':    
