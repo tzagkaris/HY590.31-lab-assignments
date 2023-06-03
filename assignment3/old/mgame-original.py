@@ -18,7 +18,6 @@ import threading
 import serial
 import json
 import random
-import copy
 
 # DEFAULT ARGS
 unit_id = 4279;
@@ -42,6 +41,7 @@ LED_OFF = "OFF"
 IDLE_TIMEOUT = 15
 WAIT_TIMEOUT = 25
 GAME_LOST_TIMEOUT = 5
+GAME_WON_TIMEOUT = 2
 
 # The current state of the game
 gstate = None;
@@ -239,11 +239,33 @@ def handlePlaySound():
     pass;
 
 def game_won():
-    # TODO
+    
+    for u in gunits:
+        ledControl(u, LED_GREEN, LED_ON)
+    
+    time.sleep(GAME_WON_TIMEOUT)
+
+    for u in gunits:
+        ledControl(u, LED_GREEN, LED_OFF)
+
+    time.sleep(GAME_WON_TIMEOUT)
+
+    for u in gunits:
+        ledControl(u, LED_GREEN, LED_ON)
+
+    time.sleep(GAME_WON_TIMEOUT)
+
+    for u in gunits:
+        ledControl(u, LED_GREEN, LED_OFF)
+
+    time.sleep(GAME_WON_TIMEOUT)
+
+
     pass;
 
 # __ONLY__ WHEN GAME CONTROL IS ACTIVE 
 # send led red to all units for 5 secs.
+# TODO, add sound instructions
 def game_lost():
 
     for u in gunits:
@@ -262,11 +284,13 @@ def game_lost():
 # when woken up, close red and yellow leds and
 # if pressed array is not marked lose and 
 # go to IDLE state ( if not already in IDLE state ) | init idle_loop. 
+#
+# TODO, add sound instructions for correct press
 def wait_state():
     
     cunit_index = (cunit_index + 1)%len(gunits)
     if(pressed[cunit_index]):
-        game_won(); # do staff and timeout for 5 secs
+        game_won(); # do staff 
         if gstate != STATE_IDLE: # WrongButtonPress might have already changed the state to idle
             init_idle();
         return;
