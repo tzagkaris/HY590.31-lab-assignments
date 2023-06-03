@@ -31,10 +31,16 @@ STATE_EXIT = "EXIT"
 
 LED_GREEN = "GREEN"
 LED_RED = "RED"
-LED_AMBER = "AMBER"
+LED_AMBER = "AMBER" 
 
 LED_ON = "ON"
 LED_OFF = "OFF"
+
+BUTTON_PRESSED = "PRESSED"
+BUTTON_RELEASED = "RELEASED"
+
+AMBER_ON = 1;
+AMBER_OFF = 0;
 
 # OTHER CONFIGURABLE ARGS
 IDLE_TIMEOUT = 15
@@ -46,12 +52,14 @@ EXIT_TIMEOUT = 15; # time to wait before exiting in order to let game master sha
 
 # The current state of the game
 game_control = 0;
+amber_state = AMBER_OFF;
 game_master_id = None;
 gstate = None;
 gunits = None;
 pressed = None;     # mark pressed/completed units
 cunit_index = None; # the index of the unit we are waiting for click event
 cred_index = None;  # the index of the button not to press
+
 
 # block till data arrives
 serial.Serial.timeout = None;
@@ -80,11 +88,27 @@ def parse_argv():
 
 # SPECIAL CASE: IF on STATE_IDLE and AMBER LIGHT is ON
 # button press will set me as GAME MASTER and will START a new game.
-def GameButtonPress():
-    pass;
+# TODO, send button press to game master
+def GameButtonPress(button_state):
+    
+    if (gstate == STATE_IDLE) and (amber_state == AMBER_ON):
+        StartNewGame()
+        return;
+
+    button_update_message = {
+        "button_state":button_state,
+        "from":my_unit_id,
+        "message_type":"GameButtonControl",
+        "to":game_master_id
+    }
+
+    res = SendToHost(button_update_message)
+    success_check(res, "Button Press to Host Error!")
+    return;
 
 # connect to Serial and loop till data arrives
-# if data is **** then call GameButtonPress
+# if data is **** then call GameButtonPress ( singleplayer logic )
+# TODO, figure this out with team 
 def gatewayLoop():
     
     ser = serial.Serial('/dev/ttyACM0',9600)
@@ -95,7 +119,7 @@ def gatewayLoop():
         # TODO fill this with Vaggos
         
         #if(True):
-        #    GameButtonPress()
+        #    GameButtonPress(BUTTON_PRESSED)
 
 # start a thread that will keep watch at arduino Serial
 # for button presses and will send messages to host if needed be
@@ -115,7 +139,7 @@ def SendToHost(message):
     sock = sock_setup();
     sock.send("{}|".format(json.dumps(message)).encode()) 
 
-    # getTasks list could could be huge.
+    # getTasks list could be huge.
     receive = sock.recv(16384);
     
     sock.close();
@@ -130,7 +154,6 @@ def GameListUnits():
     res = SendToHost(list_units_message);
     
     gunits = res["units"];
-    #pressed = len(gunits) * [0];
     return;
 
 # check if response was successful
@@ -164,8 +187,6 @@ def StartNewGame():
     return;
 
 def StopGame():
-
-    random.shuffle(gunits)
 
     game_control_message = {"game_state":"STOP","unit_id":my_unit_id,"message_type":"GameContol"}
     res = SendToHost(game_control_message)
@@ -286,7 +307,7 @@ def sendToDevice(string_message):
     pass;
 
 # TODO, decode led request and propagate to arduino, call sendToDevice
-# IMPORTANT: KEEP TRACK FOR AMBER LIGHT STATE ( needed for GameButtonPress )
+# IMPORTANT: KEEP TRACK OF AMBER LIGHT STATE ( needed for GameButtonPress )
 def handleChangeLed():
     pass;
 
@@ -318,7 +339,6 @@ def game_won():
         ledControl(u, LED_GREEN, LED_OFF)
 
     time.sleep(GAME_WON_TIMEOUT)
-
 
     pass;
 
@@ -356,8 +376,6 @@ def handle_red():
 # send appropriate light up signals, sleep for WAIT_TIMEOUT seconds
 # when woken up check if pressed array is marked. If not, lose and 
 # go to exit state. 
-#
-# TODO, add sound instructions for correct press
 def wait_state():
     
     # next unit
@@ -493,6 +511,7 @@ def main():
                 break;
         
         except (KeyboardInterrupt, SystemExit, Exception) as err:
+            print("Gameplay Error:")
             # unregister before exit
             my_unit_exit();
             if not isinstance(err, (KeyboardInterrupt, SystemExit)):
