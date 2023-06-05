@@ -6,8 +6,8 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 sock.connect(("130.236.81.13", 8716))
 
-#request = {"unit_id":4279,"message_type":"GameRegister","registration_type":"unregister"}
-request = {"unit_id":4279,"message_type":"GameRegister","registration_type":"register"}
+request = {"unit_id":4279,"message_type":"GameRegister","registration_type":"unregister"}
+#request = {"unit_id":4279,"message_type":"GameRegister","registration_type":"register"}
 #request = {"unit_id":4278,"message_type":"GameGetTasks"}
 
 #request = {"message_type":"GameListUnits","timeout":60}
