@@ -640,6 +640,20 @@ def multiplayer_logic(action):
         WrongButtonPress()
         return True; 
 
+def handleBPressed(action):
+        
+        # handle button press ( works on both difficulties)
+        if action["from"] == gunits[cunit_index]:
+            debug_print("GM: Correct Button Press from :" + str(action["from"]))
+            CorrectButtonPress();
+            return False;
+    
+        elif action["from"] == gunits[cred_index]:
+            debug_print("GM: InCorrect Button Press from :" + str(action["from"]))
+            debug_print("GM: Expected Button Press from :" + str(gunits[cunit_index]))
+            WrongButtonPress();
+            return True;
+
 # __ONLY__ WHEN UNIT IS THE GAME MASTER
 # check "from" field | 
 # if "from" is the same as gunits[cunit_index] then
@@ -660,7 +674,11 @@ def handleGameButtonPress(actions):
     br_flag = False;
     # loop through all button messages.
     for action in actions: 
-    
+
+        # game is lost. There is no need to process the other button actions ( if those exist )
+        if br_flag :
+            break;
+
         # skip if for some reason this button action does not involve you
         if action["to"] != my_unit_id: continue;
 
@@ -671,27 +689,10 @@ def handleGameButtonPress(actions):
                 br_flag = singleplayer_logic(action)
             else:
                 br_flag = multiplayer_logic(action)
-            
-            continue;
-
-        # game is lost. There is no need to process the other button actions ( if those exist )
-        if br_flag :
-            break;
-
+        
         # handle button press
-        if action["from"] == gunits[cunit_index]:
-            debug_print("GM: Correct Button Press from :" + str(action["from"]))
-            CorrectButtonPress();
-    
-        elif action["from"] == gunits[cred_index]:
-            debug_print("GM: InCorrect Button Press from :" + str(action["from"]))
-            debug_print("GM: Expected Button Press from :" + str(gunits[cunit_index]))
-            WrongButtonPress();
-            br_flag = True;
-
-        # game is lost. There is no need to process the other button actions ( if those exist )
-        if br_flag :
-            break;
+        else:
+            br_flag = handleBPressed(action);
     
     return;
 
