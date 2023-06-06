@@ -622,6 +622,7 @@ def singleplayer_logic(action):
     global pressed;
 
     debug_print("GM: Ignoring RELEASED PRESS from:" + str(action["from"]))
+    return False;
 
 def multiplayer_logic(action):
 
@@ -663,17 +664,21 @@ def handleGameButtonPress(actions):
         # skip if for some reason this button action does not involve you
         if action["to"] != my_unit_id: continue;
 
-        if(action["data"]["button_state"] != "PRESSED"):
+        # handle button release
+        if(action["data"]["button_state"] == BUTTON_RELEASED):
 
             if MODE == MODE_SINGLEPLAYER:
                 br_flag = singleplayer_logic(action)
             else:
                 br_flag = multiplayer_logic(action)
+            
+            continue;
 
         # game is lost. There is no need to process the other button actions ( if those exist )
         if br_flag :
             break;
 
+        # handle button press
         if action["from"] == gunits[cunit_index]:
             debug_print("GM: Correct Button Press from :" + str(action["from"]))
             CorrectButtonPress();
