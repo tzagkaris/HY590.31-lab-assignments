@@ -8,7 +8,7 @@ sock.connect(("130.236.81.13", 8716))
 
 request = {"unit_id":4279,"message_type":"GameRegister","registration_type":"unregister"}
 #request = {"unit_id":4279,"message_type":"GameRegister","registration_type":"register"}
-#request = {"unit_id":4278,"message_type":"GameGetTasks"}
+#request = {"unit_id":4279,"message_type":"GameGetTasks"}
 
 #request = {"message_type":"GameListUnits","timeout":60}
 #request = {"game_state":"START","unit_id":4278,"message_type":"GameContol"}
