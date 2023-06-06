@@ -639,20 +639,24 @@ def multiplayer_logic(action):
         debug_print("GM: from : " + str(action["from"]) + " button was active and now it was released. ")
         WrongButtonPress()
         return True; 
+    
+    return False; # ignore release
 
 def handleBPressed(action):
         
-        # handle button press ( works on both difficulties)
-        if action["from"] == gunits[cunit_index]:
-            debug_print("GM: Correct Button Press from :" + str(action["from"]))
-            CorrectButtonPress();
-            return False;
-    
-        elif action["from"] == gunits[cred_index]:
-            debug_print("GM: InCorrect Button Press from :" + str(action["from"]))
-            debug_print("GM: Expected Button Press from :" + str(gunits[cunit_index]))
-            WrongButtonPress();
-            return True;
+    # handle button press ( works on both difficulties)
+    if action["from"] == gunits[cunit_index]:
+        debug_print("GM: Correct Button Press from :" + str(action["from"]))
+        CorrectButtonPress();
+        return False;
+
+    elif action["from"] == gunits[cred_index]:
+        debug_print("GM: InCorrect Button Press from :" + str(action["from"]))
+        debug_print("GM: Expected Button Press from :" + str(gunits[cunit_index]))
+        WrongButtonPress();
+        return True;
+
+    return False; # ignore press
 
 # __ONLY__ WHEN UNIT IS THE GAME MASTER
 # check "from" field | 
@@ -774,9 +778,7 @@ def main():
             actions = GameHandleTasks(tasks)
             if game_control:
                 handleGameButtonPress(actions)
-
-
-        
+                
         except (KeyboardInterrupt, SystemExit, Exception) as err:
             debug_print("ERROR: Gameplay Error:")
             # unregister before exit
