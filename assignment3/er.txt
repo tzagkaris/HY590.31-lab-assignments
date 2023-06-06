@@ -1,0 +1,692 @@
+ - DEBUG: Game Start | Active Game Logic : s
+ - DEBUG: Parsed Arguments
+ - DEBUG: Gateway Initialized
+ - DEBUG: Gateway Active
+ - DEBUG: Registered to Game
+ - DEBUG: Got Initial Unit List
+ - DEBUG: T_GM: Inacting Temporal Master
+ - DEBUG: T_GM:Temporal Master Idle Loop Active
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Next index
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 32451
+ - DEBUG: Change led COLOR: AMBER | iid: 32451
+ - DEBUG: Change led STATE: OFF | iid: 32451
+ - DEBUG: Instruction to Device: 8 | iid: 32451
+ - DEBUG: Sent: 8 | iid: 32451
+ - DEBUG: T_GM: Next index
+ - DEBUG: Received New Task
+ - DEBUG: Processing: BUTTON_CHANGE
+ - DEBUG: Received New Task
+ - DEBUG: Processing: BUTTON_CHANGE
+ - DEBUG: T_GM: Next index
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 39348
+ - DEBUG: Change led COLOR: AMBER | iid: 39348
+ - DEBUG: Change led STATE: ON | iid: 39348
+ - DEBUG: Instruction to Device: 12 | iid: 39348
+ - DEBUG: Sent: 12 | iid: 39348
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: G-Way: Got: 1
+ - DEBUG: Button Press when AMBER is ON
+ - DEBUG: G-Way: Got: 0
+ - DEBUG: Button Press when AMBER is ON
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 1308, 4279]
+ - DEBUG: GM: In wait_state | fid: 56022
+ - DEBUG: GM: AMBER unit index: 1 | fid: 56022
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1308, 4279, 1303]
+ - DEBUG: GM: In wait_state | fid: 53334
+ - DEBUG: GM: AMBER unit index: 1 | fid: 53334
+ - DEBUG: GM: RED unit index: 0 | fid: 56022
+ - DEBUG: GM: RED unit index: 0 | fid: 53334
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [4279, 1303, 1308]
+ - DEBUG: GM: In wait_state | fid: 44501
+ - DEBUG: GM: AMBER unit index: 1 | fid: 44501
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: T_GM: Next index
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 1308, 4279]
+ - DEBUG: GM: In wait_state | fid: 74849
+ - DEBUG: GM: AMBER unit index: 1 | fid: 74849
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 87862
+ - DEBUG: Change led COLOR: AMBER | iid: 87862
+ - DEBUG: Change led STATE: ON | iid: 87862
+ - DEBUG: Instruction to Device: 12 | iid: 87862
+ - DEBUG: Sent: 12 | iid: 87862
+ - DEBUG: GM: RED unit index: 2 | fid: 44501
+ - DEBUG: GM: RED unit index: 0 | fid: 74849
+ - DEBUG: T_GM:Temporal Master Idle Loop exit
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [4279, 1303, 1308]
+ - DEBUG: GM: In wait_state | fid: 45615
+ - DEBUG: GM: AMBER unit index: 1 | fid: 45615
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 87862
+ - DEBUG: Change led COLOR: AMBER | iid: 87862
+ - DEBUG: Change led STATE: OFF | iid: 87862
+ - DEBUG: Instruction to Device: 8 | iid: 87862
+ - DEBUG: Sent: 8 | iid: 87862
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 1308, 4279]
+ - DEBUG: GM: In wait_state | fid: 91135
+ - DEBUG: GM: AMBER unit index: 1 | fid: 91135
+ - DEBUG: GM: RED unit index: 0 | fid: 45615
+ - DEBUG: GM: RED unit index: 2 | fid: 91135
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [4279, 1308, 1303]
+ - DEBUG: GM: In wait_state | fid: 68264
+ - DEBUG: GM: AMBER unit index: 1 | fid: 68264
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 4279, 1308]
+ - DEBUG: GM: In wait_state | fid: 39244
+ - DEBUG: GM: AMBER unit index: 1 | fid: 39244
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 31154
+ - DEBUG: Change led COLOR: RED | iid: 31154
+ - DEBUG: Change led STATE: ON | iid: 31154
+ - DEBUG: Instruction to Device: 48 | iid: 31154
+ - DEBUG: Sent: 48 | iid: 31154
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 9550
+ - DEBUG: Change led COLOR: RED | iid: 9550
+ - DEBUG: Change led STATE: ON | iid: 9550
+ - DEBUG: Instruction to Device: 48 | iid: 9550
+ - DEBUG: Sent: 48 | iid: 9550
+ - DEBUG: GM: RED unit index: 2 | fid: 68264
+ - DEBUG: GM: RED unit index: 2 | fid: 39244
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1308, 4279, 1303]
+ - DEBUG: GM: In wait_state | fid: 89302
+ - DEBUG: GM: AMBER unit index: 1 | fid: 89302
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 4279, 1308]
+ - DEBUG: GM: In wait_state | fid: 72990
+ - DEBUG: GM: AMBER unit index: 1 | fid: 72990
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 36542
+ - DEBUG: Change led COLOR: AMBER | iid: 36542
+ - DEBUG: Change led STATE: ON | iid: 36542
+ - DEBUG: Instruction to Device: 12 | iid: 36542
+ - DEBUG: Sent: 12 | iid: 36542
+ - DEBUG: GM: RED unit index: 2 | fid: 89302
+ - DEBUG: GM: RED unit index: 0 | fid: 72990
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 1308, 4279]
+ - DEBUG: GM: In wait_state | fid: 19707
+ - DEBUG: GM: AMBER unit index: 1 | fid: 19707
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 86827
+ - DEBUG: Change led COLOR: AMBER | iid: 86827
+ - DEBUG: Change led STATE: ON | iid: 86827
+ - DEBUG: Instruction to Device: 12 | iid: 86827
+ - DEBUG: Sent: 12 | iid: 86827
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 1308, 4279]
+ - DEBUG: GM: In wait_state | fid: 20969
+ - DEBUG: GM: AMBER unit index: 1 | fid: 20969
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 36181
+ - DEBUG: Change led COLOR: AMBER | iid: 36181
+ - DEBUG: Change led STATE: ON | iid: 36181
+ - DEBUG: Instruction to Device: 12 | iid: 36181
+ - DEBUG: Sent: 12 | iid: 36181
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 1303
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 36518
+ - DEBUG: Change led COLOR: AMBER | iid: 36518
+ - DEBUG: Change led STATE: ON | iid: 36518
+ - DEBUG: Instruction to Device: 12 | iid: 36518
+ - DEBUG: Sent: 12 | iid: 36518
+ - DEBUG: GM: RED unit index: 2 | fid: 19707
+ - DEBUG: GM: RED unit index: 0 | fid: 20969
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [4279, 1308, 1303]
+ - DEBUG: GM: In wait_state | fid: 29391
+ - DEBUG: GM: AMBER unit index: 1 | fid: 29391
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 4279, 1308]
+ - DEBUG: GM: In wait_state | fid: 56638
+ - DEBUG: GM: AMBER unit index: 1 | fid: 56638
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 12166
+ - DEBUG: Change led COLOR: RED | iid: 12166
+ - DEBUG: Change led STATE: ON | iid: 12166
+ - DEBUG: Instruction to Device: 48 | iid: 12166
+ - DEBUG: Sent: 48 | iid: 12166
+ - DEBUG: GM: RED unit index: 2 | fid: 29391
+ - DEBUG: GM: RED unit index: 2 | fid: 56638
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1308, 4279, 1303]
+ - DEBUG: GM: In wait_state | fid: 34965
+ - DEBUG: GM: AMBER unit index: 1 | fid: 34965
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1308, 1303, 4279]
+ - DEBUG: GM: In wait_state | fid: 41510
+ - DEBUG: GM: AMBER unit index: 1 | fid: 41510
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 91141
+ - DEBUG: Change led COLOR: AMBER | iid: 91141
+ - DEBUG: Change led STATE: ON | iid: 91141
+ - DEBUG: Instruction to Device: 12 | iid: 91141
+ - DEBUG: Sent: 12 | iid: 91141
+ - DEBUG: GM: RED unit index: 0 | fid: 34965
+ - DEBUG: GM: RED unit index: 0 | fid: 41510
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 56022
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 4279, 1308]
+ - DEBUG: GM: In wait_state | fid: 4605
+ - DEBUG: GM: AMBER unit index: 1 | fid: 4605
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 78849
+ - DEBUG: Change led COLOR: AMBER | iid: 78849
+ - DEBUG: Change led STATE: ON | iid: 78849
+ - DEBUG: Instruction to Device: 12 | iid: 78849
+ - DEBUG: Sent: 12 | iid: 78849
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 53334
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: Game Unit Order [1303, 1308, 4279]
+ - DEBUG: GM: In wait_state | fid: 73474
+ - DEBUG: GM: AMBER unit index: 1 | fid: 73474
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 12104
+ - DEBUG: Change led COLOR: RED | iid: 12104
+ - DEBUG: Change led STATE: ON | iid: 12104
+ - DEBUG: Instruction to Device: 48 | iid: 12104
+ - DEBUG: Sent: 48 | iid: 12104
+ - DEBUG: GM: RED unit index: 2 | fid: 4605
+ - DEBUG: GM: RED unit index: 2 | fid: 73474
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 44501
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 74849
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: Game Unit Order [4279, 1308, 1303]
+ - DEBUG: GM: In wait_state | fid: 65377
+ - DEBUG: Received New Task
+ - DEBUG: GM: AMBER unit index: 1 | fid: 65377
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 53160
+ - DEBUG: Change led COLOR: AMBER | iid: 53160
+ - DEBUG: Change led STATE: ON | iid: 53160
+ - DEBUG: Instruction to Device: 12 | iid: 53160
+ - DEBUG: Sent: 12 | iid: 53160
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 4279, 1308]
+ - DEBUG: GM: In wait_state | fid: 76213
+ - DEBUG: GM: AMBER unit index: 1 | fid: 76213
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_SOUND
+ - DEBUG: Play Sound Task for : 4279 | iid: 16376
+ - DEBUG: Play Sound: LOSE | iid: 16376
+ - DEBUG: Sent: 128 | iid: 16376
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 61529
+ - DEBUG: Change led COLOR: RED | iid: 61529
+ - DEBUG: Change led STATE: ON | iid: 61529
+ - DEBUG: Instruction to Device: 48 | iid: 61529
+ - DEBUG: Sent: 48 | iid: 61529
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 51503
+ - DEBUG: Change led COLOR: RED | iid: 51503
+ - DEBUG: Change led STATE: ON | iid: 51503
+ - DEBUG: Instruction to Device: 48 | iid: 51503
+ - DEBUG: Sent: 48 | iid: 51503
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_SOUND
+ - DEBUG: Play Sound Task for : 4279 | iid: 40667
+ - DEBUG: Play Sound: LOSE | iid: 40667
+ - DEBUG: Sent: 128 | iid: 40667
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 26914
+ - DEBUG: Change led COLOR: RED | iid: 26914
+ - DEBUG: Change led STATE: ON | iid: 26914
+ - DEBUG: Instruction to Device: 48 | iid: 26914
+ - DEBUG: Sent: 48 | iid: 26914
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_SOUND
+ - DEBUG: Play Sound Task for : 4279 | iid: 35908
+ - DEBUG: Play Sound: LOSE | iid: 35908
+ - DEBUG: Sent: 128 | iid: 35908
+ - DEBUG: GM: RED unit index: 2 | fid: 65377
+ - DEBUG: GM: RED unit index: 2 | fid: 76213
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 45615
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 41823
+ - DEBUG: Change led COLOR: RED | iid: 41823
+ - DEBUG: Change led STATE: ON | iid: 41823
+ - DEBUG: Instruction to Device: 48 | iid: 41823
+ - DEBUG: Sent: 48 | iid: 41823
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 91135
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 1308, 4279]
+ - DEBUG: GM: In wait_state | fid: 11009
+ - DEBUG: GM: AMBER unit index: 1 | fid: 11009
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [4279, 1303, 1308]
+ - DEBUG: GM: In wait_state | fid: 51963
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 53428
+ - DEBUG: GM: AMBER unit index: 1 | fid: 51963
+ - DEBUG: Change led COLOR: AMBER | iid: 53428
+ - DEBUG: Change led STATE: ON | iid: 53428
+ - DEBUG: Instruction to Device: 12 | iid: 53428
+ - DEBUG: Sent: 12 | iid: 53428
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 62270
+ - DEBUG: Change led COLOR: AMBER | iid: 62270
+ - DEBUG: Change led STATE: OFF | iid: 62270
+ - DEBUG: Instruction to Device: 8 | iid: 62270
+ - DEBUG: Sent: 8 | iid: 62270
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_SOUND
+ - DEBUG: Play Sound Task for : 4279 | iid: 88621
+ - DEBUG: Play Sound: LOSE | iid: 88621
+ - DEBUG: Sent: 128 | iid: 88621
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 16137
+ - DEBUG: Change led COLOR: RED | iid: 16137
+ - DEBUG: Change led STATE: ON | iid: 16137
+ - DEBUG: Instruction to Device: 48 | iid: 16137
+ - DEBUG: Sent: 48 | iid: 16137
+ - DEBUG: GM: RED unit index: 2 | fid: 11009
+ - DEBUG: GM: RED unit index: 2 | fid: 51963
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 68264
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 39244
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 1308, 4279]
+ - DEBUG: GM: In wait_state | fid: 92114
+ - DEBUG: GM: AMBER unit index: 1 | fid: 92114
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_SOUND
+ - DEBUG: Play Sound Task for : 4279 | iid: 28542
+ - DEBUG: Play Sound: LOSE | iid: 28542
+ - DEBUG: Sent: 128 | iid: 28542
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1308, 1303, 4279]
+ - DEBUG: GM: In wait_state | fid: 99772
+ - DEBUG: GM: AMBER unit index: 1 | fid: 99772
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 71253
+ - DEBUG: Change led COLOR: RED | iid: 71253
+ - DEBUG: Change led STATE: ON | iid: 71253
+ - DEBUG: Instruction to Device: 48 | iid: 71253
+ - DEBUG: Sent: 48 | iid: 71253
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_SOUND
+ - DEBUG: Play Sound Task for : 4279 | iid: 49779
+ - DEBUG: Play Sound: LOSE | iid: 49779
+ - DEBUG: Sent: 128 | iid: 49779
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 98117
+ - DEBUG: Change led COLOR: RED | iid: 98117
+ - DEBUG: Change led STATE: OFF | iid: 98117
+ - DEBUG: Instruction to Device: 32 | iid: 98117
+ - DEBUG: Sent: 32 | iid: 98117
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 89207
+ - DEBUG: Change led COLOR: RED | iid: 89207
+ - DEBUG: Change led STATE: OFF | iid: 89207
+ - DEBUG: Instruction to Device: 32 | iid: 89207
+ - DEBUG: Sent: 32 | iid: 89207
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 70141
+ - DEBUG: Change led COLOR: RED | iid: 70141
+ - DEBUG: Change led STATE: ON | iid: 70141
+ - DEBUG: Instruction to Device: 48 | iid: 70141
+ - DEBUG: Sent: 48 | iid: 70141
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: STOP
+ - DEBUG: Pospone Exit thread Active
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_SOUND
+ - DEBUG: Play Sound Task for : 4279 | iid: 47984
+ - DEBUG: Play Sound: LOSE | iid: 47984
+ - DEBUG: Sent: 128 | iid: 47984
+ - DEBUG: GM: RED unit index: 2 | fid: 92114
+ - DEBUG: GM: RED unit index: 2 | fid: 99772
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 89302
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: STOP
+ - DEBUG: Pospone Exit thread Active
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 12286
+ - DEBUG: Change led COLOR: RED | iid: 12286
+ - DEBUG: Change led STATE: ON | iid: 12286
+ - DEBUG: Instruction to Device: 48 | iid: 12286
+ - DEBUG: Sent: 48 | iid: 12286
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_SOUND
+ - DEBUG: Play Sound Task for : 4279 | iid: 96300
+ - DEBUG: Play Sound: LOSE | iid: 96300
+ - DEBUG: Sent: 128 | iid: 96300
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 72990
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [4279, 1308, 1303]
+ - DEBUG: GM: In wait_state | fid: 59153
+ - DEBUG: Received New Task
+ - DEBUG: GM: AMBER unit index: 1 | fid: 59153
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1303, 4279, 1308]
+ - DEBUG: GM: In wait_state | fid: 82592
+ - DEBUG: GM: AMBER unit index: 1 | fid: 82592
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 11480
+ - DEBUG: Change led COLOR: RED | iid: 11480
+ - DEBUG: Change led STATE: ON | iid: 11480
+ - DEBUG: Instruction to Device: 48 | iid: 11480
+ - DEBUG: Sent: 48 | iid: 11480
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 38545
+ - DEBUG: Change led COLOR: RED | iid: 38545
+ - DEBUG: Change led STATE: ON | iid: 38545
+ - DEBUG: Instruction to Device: 48 | iid: 38545
+ - DEBUG: Sent: 48 | iid: 38545
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 7110
+ - DEBUG: Change led COLOR: RED | iid: 7110
+ - DEBUG: Change led STATE: ON | iid: 7110
+ - DEBUG: Instruction to Device: 48 | iid: 7110
+ - DEBUG: Sent: 48 | iid: 7110
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 96514
+ - DEBUG: Change led COLOR: RED | iid: 96514
+ - DEBUG: Change led STATE: OFF | iid: 96514
+ - DEBUG: Instruction to Device: 32 | iid: 96514
+ - DEBUG: Sent: 32 | iid: 96514
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 6558
+ - DEBUG: Change led COLOR: RED | iid: 6558
+ - DEBUG: Change led STATE: OFF | iid: 6558
+ - DEBUG: Instruction to Device: 32 | iid: 6558
+ - DEBUG: Sent: 32 | iid: 6558
+ - DEBUG: GM: RED unit index: 0 | fid: 59153
+ - DEBUG: GM: RED unit index: 0 | fid: 82592
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 19707
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 20969
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: STOP
+ - DEBUG: Pospone Exit thread Active
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: STOP
+ - DEBUG: Pospone Exit thread Active
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [4279, 1308, 1303]
+ - DEBUG: GM: In wait_state | fid: 13435
+ - DEBUG: GM: AMBER unit index: 1 | fid: 13435
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1308, 4279, 1303]
+ - DEBUG: GM: In wait_state | fid: 1381
+ - DEBUG: GM: AMBER unit index: 1 | fid: 1381
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 30420
+ - DEBUG: Change led COLOR: AMBER | iid: 30420
+ - DEBUG: Change led STATE: ON | iid: 30420
+ - DEBUG: Instruction to Device: 12 | iid: 30420
+ - DEBUG: Sent: 12 | iid: 30420
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_SOUND
+ - DEBUG: Play Sound Task for : 4279 | iid: 40810
+ - DEBUG: Play Sound: LOSE | iid: 40810
+ - DEBUG: Sent: 128 | iid: 40810
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 94181
+ - DEBUG: Change led COLOR: RED | iid: 94181
+ - DEBUG: Change led STATE: OFF | iid: 94181
+ - DEBUG: Instruction to Device: 32 | iid: 94181
+ - DEBUG: Sent: 32 | iid: 94181
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_SOUND
+ - DEBUG: Play Sound Task for : 4279 | iid: 26706
+ - DEBUG: Play Sound: LOSE | iid: 26706
+ - DEBUG: Sent: 128 | iid: 26706
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 28791
+ - DEBUG: Change led COLOR: RED | iid: 28791
+ - DEBUG: Change led STATE: OFF | iid: 28791
+ - DEBUG: Instruction to Device: 32 | iid: 28791
+ - DEBUG: Sent: 32 | iid: 28791
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 62612
+ - DEBUG: Change led COLOR: RED | iid: 62612
+ - DEBUG: Change led STATE: ON | iid: 62612
+ - DEBUG: Instruction to Device: 48 | iid: 62612
+ - DEBUG: Sent: 48 | iid: 62612
+ - DEBUG: GM: RED unit index: 0 | fid: 13435
+ - DEBUG: GM: RED unit index: 0 | fid: 1381
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 29391
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 56638
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: ERROR: Gameplay Error:
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 34965
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 41510
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 4605
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 73474
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 65377
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 76213
+ - DEBUG: GM: Initiating Game Lost Sequence
+Unterminated string starting at: line 1 column 1436 (char 1435)
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 11009
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 51963
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 92114
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 99772
+ - DEBUG: GM: Initiating Game Lost Sequence

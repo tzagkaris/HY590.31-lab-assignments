@@ -28,8 +28,9 @@ DEBUG_PRINT = True;
 my_unit_id = 4279;
 HOST = "130.236.81.13";
 PORT = 8716; 
-LOOP_DELAY = 2; 
+LOOP_DELAY = 0.5; 
 MODE = "s"; # s singleplayer | m multiplayer
+DEVICE_CONN = 1; 
 
 STATE_IDLE = "IDLE"
 STATE_WAIT = "WAIT"
@@ -72,6 +73,8 @@ gunits = None;
 pressed = None;     # mark pressed/completed units
 cunit_index = None; # the index of the unit we are waiting for click event
 cred_index = None;  # the index of the button not to press
+start_flag = False;
+
 
 cOFFdict = {
     "GREEN": 2,
@@ -108,9 +111,9 @@ def parse_argv():
             case "-u": 
                 globals().update(my_unit_id=int(sys.argv[entry + 1]))
             case "-d":
-                globals().update(LOOP_DELAY=int(sys.argv[entry + 1]))
+                globals().update(DEVICE_CONN=int(sys.argv[entry + 1]))
             case "-m":
-                globals().update(MODE=int(sys.argv[entry + 1]))
+                globals().update(MODE=sys.argv[entry + 1])
             case _: 
                 raise Exception("Argument Parsing Error");
 
@@ -118,10 +121,15 @@ def parse_argv():
 # SPECIAL CASE: IF on STATE_IDLE and AMBER LIGHT is ON
 # button press will set me as GAME MASTER and will START a new game.
 def GameButtonPress(button_state):
-    
-    if (gstate == STATE_IDLE) and (amber_state == LED_ON):
+    global gstate;
+    global amber_state;
+    global game_master_id;
+    global start_flag;
+
+    if (gstate == STATE_IDLE) and (amber_state == LED_ON) and (not start_flag):
         debug_print("Button Press when AMBER is ON")
         StartNewGame()
+        start_flag = True;
         return;
 
     button_update_message = {
@@ -132,12 +140,15 @@ def GameButtonPress(button_state):
     }
 
     res = SendToHost(button_update_message)
-    success_check(res, "Button Press to Host Error!")
+    #success_check(res, "Button Press to Host Error!")
     return;
 
 # connect to Serial and loop till data arrives
 # catch 1s and 0s, send GameButtonPresses if seen.
 def gatewayLoop():
+    
+    ser = serial.Serial('/dev/ttyACM0',9600)
+
     debug_print("Gateway Active")
     while(True):
         # block here until 1 bytes arrives; see line 41
@@ -151,10 +162,12 @@ def gatewayLoop():
             GameButtonPress(BUTTON_RELEASED);
 
 
+
+
 # start a thread that will keep watch at arduino Serial
 # for button presses and will send messages to host if needed be
 def initGateway():
-    th = threading.Thread(target=gatewayLoop, args=(1, ), daemon=True)
+    th = threading.Thread(target=gatewayLoop, args=( ), daemon=True)
     th.start();
     return;
 
@@ -181,6 +194,8 @@ def SendToHost(message):
 # get Unit Lists 
 def GameListUnits():
 
+    global gunits;
+
     list_units_message = {"message_type":"GameListUnits","timeout":60}
     res = SendToHost(list_units_message);
     
@@ -195,13 +210,15 @@ def success_check(response, er_msg):
 
 def onlyMeRegistered():
 
+    global gunits;
+
     if(len(gunits) == 1):
         return True;
 
     return False;
 
 def init_temporal():
-    th = threading.Thread(target=idle_loop, args=(1, ))
+    th = threading.Thread(target=idle_loop, args=( ))
     th.start();
 
 # __ONLY__ WHEN GAME CONTROL IS ACTIVE 
@@ -209,12 +226,14 @@ def init_temporal():
 # define order and sent appropriate StartControl message.
 def StartNewGame():
 
+    global gunits;
+
     random.shuffle(gunits)
 
     game_control_message = {"game_state":"START","unit_id":my_unit_id,"message_type":"GameContol"}
     res = SendToHost(game_control_message)
 
-    success_check(res, "Game Control-Start Game- Error!")
+    #success_check(res, "Game Control-Start Game- Error!")
 
     return;
 
@@ -223,7 +242,7 @@ def StopGame():
     game_control_message = {"game_state":"STOP","unit_id":my_unit_id,"message_type":"GameContol"}
     res = SendToHost(game_control_message)
 
-    success_check(res, "Game Control-Stop Game- Error!")
+    #success_check(res, "Game Control-Stop Game- Error!")
 
     return;
 
@@ -247,36 +266,46 @@ def ledControl(unit, color, state):
 # current unit. After 15 secs, will move to the next unit, shutting down the prev one.
 # stop looping and end thread exec when gstate != STATE_IDLE
 def idle_loop():    
+
+    global gunits;
+    global gstate;
+
     debug_print("T_GM:Temporal Master Idle Loop Active");
     len_units = len(gunits)
-    ledControl(gunits[0], LED_AMBER, LED_ON)
-    next_index = 1;
+    #ledControl(gunits[0], LED_AMBER, LED_ON)
+    index = 0;
+    gstate = STATE_IDLE;
+    temp_counter = 0;
 
     while(True):        
-        for index in range(0, len_units - 1):
+        for index in range(0, len_units):
         
             if(gstate != STATE_IDLE): 
                 break;    
 
+            ledControl(gunits[index], LED_AMBER, LED_ON)
             # sleep for some time then check if out of IDLE STATE
-            for i in range(IDLE_TIMEOUT/3):
-                time.sleep(IDLE_TIMEOUT/5)
-                if(gstate != STATE_IDLE): 
-                    break;
+            time.sleep(IDLE_TIMEOUT)
             
+            ledControl(gunits[index], LED_AMBER, LED_OFF)
+ 
             debug_print("T_GM: Next index");
 
-            next_index = index+1; 
-
-            ledControl(gunits[index], LED_AMBER, LED_OFF)
-            ledControl(gunits[next_index], LED_AMBER, LED_ON)
-        
-        GameListUnits(); # update your list for the next loop
         if(gstate != STATE_IDLE):
             break;
+        
+        GameListUnits(); # update your list for the next loop
+        len_units = len(gunits)
         debug_print("T_GM: Re-Looping");
+        
+        # TEMP REMOVE ME
+        # --------------
+        temp_counter = temp_counter + 1;
+        if(temp_counter == 5):
+            StartNewGame()
+        # TEMP REMOVE ABOVE
+        # --------------
 
-    ledControl(gunits[next_index], LED_AMBER, LED_OFF)
     debug_print("T_GM:Temporal Master Idle Loop exit");
     return;
 
@@ -286,7 +315,7 @@ def GameRegister():
     game_register_message = {"unit_id":my_unit_id,"message_type":"GameRegister","registration_type":"register"}
     res = SendToHost(game_register_message);
     
-    success_check(res, "Game Register Error!")
+    #success_check(res, "Game Register Error!")
 
     return;
 
@@ -297,7 +326,7 @@ def GameUnregister():
     game_register_message = {"unit_id":my_unit_id,"message_type":"GameRegister","registration_type":"unregister"}
     res = SendToHost(game_register_message);
     
-    success_check(res, "Game UnRegister Error!")
+    #success_check(res, "Game UnRegister Error!")
 
     return;
 
@@ -311,7 +340,7 @@ def soundControl(state, frm , to):
     }
 
     res = SendToHost(sound_message)
-    success_check(res, "Sound Play Error")
+    #success_check(res, "Sound Play Error")
 
     return;
 
@@ -324,29 +353,38 @@ def GameGetTasks():
     return res["tasks"]
 
 def pospone_exit():
+    global gstate;
+
     debug_print("Pospone Exit thread Active")
     time.sleep(EXIT_TIMEOUT)
     gstate = STATE_EXIT;
 
 def init_play_game():
 
+    global pressed;
+    global gunits;
+    global cunit_index;
+    global game_control;
+    global gstate;
+
     debug_print("Starting A New Game and Inacting Game Master")
 
     GameListUnits()
     debug_print("Updated List of Units")
-
-    StartNewGame(); # propagate game start to all units connected 
-    #gstate = STATE_WAIT;
     game_control = 1;
     random.shuffle(gunits) # get a random order
-    debug_print("Game Unit Order " + gunits)
+    debug_print("Game Unit Order " + str(gunits))
 
     pressed = [0] * len(gunits) # init an array that marks pressed units
     cunit_index = 0;
-    th = threading.Thread(target=wait_state, args=(1, ))
+
+    th = threading.Thread(target=wait_state, args=( ))
     th.start();
 
 def hanldePlayGame(task):
+
+    global gstate;
+    global game_master_id;
 
     debug_print("Got Game State: " + (task["data"]["game_state"]).upper())
 
@@ -361,7 +399,7 @@ def hanldePlayGame(task):
                 init_play_game()
         
         case "STOP": # entry exit state after some seconds.
-            th = threading.Thread(target=pospone_exit, args=(1, ))
+            th = threading.Thread(target=pospone_exit, args=( ))
             th.start()
             return;
 
@@ -369,6 +407,10 @@ def hanldePlayGame(task):
 # send an n length message to the arduino using Serial
 def sendToDevice(instruction):
     
+    if not DEVICE_CONN: return;
+
+    global ser;
+
     ba = bytearray([instruction])
     ser.write(ba)
 
@@ -385,7 +427,8 @@ def decodeLedInstruction(lcolor, lstate):
 
 # IMPORTANT: KEEP TRACK OF AMBER LIGHT STATE ( needed for GameButtonPress )
 def handleChangeLed(task):
-    
+    global amber_state;
+
     iid = random.randrange(1000, 100000)
     debug_print("Change Led Task for : " + str(task["to"])+ " | iid: " + str(iid) )
 
@@ -438,7 +481,7 @@ def handlePlaySound(task):
 # __ONLY__ WHEN UNIT IS THE GAME MASTER
 # send pulsing green for 8 secs 
 def game_won():
-
+    global gunits;
     debug_print("GM: Initiating Game Won Sequence")
 
 
@@ -451,24 +494,12 @@ def game_won():
     for u in gunits:
         ledControl(u, LED_GREEN, LED_OFF)
 
-    time.sleep(GAME_WON_TIMEOUT)
-
-    for u in gunits:
-        ledControl(u, LED_GREEN, LED_ON)
-
-    time.sleep(GAME_WON_TIMEOUT)
-
-    for u in gunits:
-        ledControl(u, LED_GREEN, LED_OFF)
-
-    time.sleep(GAME_WON_TIMEOUT)
-
-    pass;
+    return;
 
 # __ONLY__ WHEN UNIT IS THE GAME MASTER
 # send led red to all units for 5 secs.
 def game_lost():
-
+    global gunits;
     debug_print("GM: Initiating Game Lost Sequence")
 
     for u in gunits:
@@ -485,7 +516,10 @@ def game_lost():
 # __ONLY__ WHEN UNIT IS THE GAME MASTER
 # pick a random unit to be red
 def handle_red(fid):
-
+    global pressed;
+    global gunits;
+    global cunit_index;
+    global cred_index;
     cred_index = 9090; # default red index, handles a specific condition
 
     # do not draw random unit for red if all units except one are pressed
@@ -496,6 +530,7 @@ def handle_red(fid):
             cred_index = random.randrange(len(gunits))
 
         ledControl(gunits[cred_index], LED_RED, LED_ON)
+        debug_print("GM: RED unit: " + str(gunits[cred_index]) + " | fid: " + str(fid))
     else:
         debug_print("GM: No Red Unit Pick. Using Default." + " | fid: " + str(fid))
     return;
@@ -506,7 +541,12 @@ def handle_red(fid):
 # when woken up check if pressed array is marked. If not, lose and 
 # go to exit state. 
 def wait_state():
-    
+    global gunits;
+    global cunit_index;
+    global pressed;
+    global cred_index;
+    global gstate;
+
     # next unit
     cunit_index = (cunit_index + 1)%len(gunits)
     
@@ -517,7 +557,7 @@ def wait_state():
     # copy to a local index in order to be sure that cunit_index will be the same after timeout
     local_index_copy = cunit_index; 
 
-    debug_print("GM: AMBER unit index: " + str(local_index_copy) + " | fid: " + str(fid))
+    debug_print("GM: AMBER unit: " + str(gunits[local_index_copy]) + " | fid: " + str(fid))
 
     if pressed[local_index_copy]:
         game_won(); # do winning staff 
@@ -527,12 +567,10 @@ def wait_state():
     ledControl(gunits[local_index_copy], LED_AMBER, LED_ON)
 
     handle_red(fid);
-    
-    debug_print("GM: RED unit index: " + str(cred_index) + " | fid: " + str(fid))
 
     time.sleep(WAIT_TIMEOUT)
 
-    if not pressed[local_index_copy]:
+    if (not pressed[local_index_copy]):
     
         debug_print("GM: Correct Unit Index not pressed, Game Over." + " | fid: " + str(fid))
     
@@ -544,6 +582,11 @@ def wait_state():
 # Mark pressed and init the wait_state thread.
 def CorrectButtonPress():
 
+    global pressed;
+    global gunits;
+    global cred_index;
+    global cunit_index;
+
     pressed[cunit_index] = 1;
     ledControl(gunits[cunit_index], LED_GREEN, LED_ON)
 
@@ -551,21 +594,50 @@ def CorrectButtonPress():
     ledControl(gunits[cunit_index], LED_AMBER, LED_OFF)
     ledControl(gunits[cred_index], LED_RED, LED_OFF)
 
-    th = threading.Thread(target=wait_state, args=(1, ))
-    th.start()
+    if(gstate == STATE_WAIT):
+        th = threading.Thread(target=wait_state, args=( ))
+        th.start()
 
     return;
 
 # __ONLY__ WHEN UNIT IS THE GAME MASTER 
 # lose and go to EXIT state
 def WrongButtonPress():
-
+    global gunits;
+    global cunit_index;
+    global cred_index;
     # close wait state lighrs
     ledControl(gunits[cunit_index], LED_AMBER, LED_OFF)
     ledControl(gunits[cred_index], LED_RED, LED_OFF)
 
     game_lost()
     StopGame()
+
+def singleplayer_logic(action):
+
+    global gstate;
+    global cunit_index;
+    global gunits;
+    global cred_index;
+    global pressed;
+
+    debug_print("GM: Ignoring RELEASED PRESS from:" + str(action["from"]))
+
+def multiplayer_logic(action):
+
+    global gstate;
+    global cunit_index;
+    global gunits;
+    global cred_index;
+    global pressed;
+    
+    debug_print("GM: Got RELEASED from :" + str(action["from"]))
+            
+    # if button is logged as pressed, lose_game 
+    if(pressed[action["from"]]):
+        debug_print("GM: from : " + str(action["from"]) + " button was active and now it was released. ")
+        WrongButtonPress()
+        return True; 
 
 # __ONLY__ WHEN UNIT IS THE GAME MASTER
 # check "from" field | 
@@ -575,43 +647,47 @@ def WrongButtonPress():
 # if "from" is the same as the unit we switched led RED then
 # lose and go to IDLE state (if not already ) | init idle_loop.
 def handleGameButtonPress(actions):
-
+    global gstate;
+    global cunit_index;
+    global gunits;
+    global cred_index;
+    global pressed;
     # do not process button clicks if game state is not WAIT
     if(gstate != STATE_WAIT):
         return;
 
+    br_flag = False;
     # loop through all button messages.
     for action in actions: 
+    
+        # skip if for some reason this button action does not involve you
+        if action["to"] != my_unit_id: continue;
 
         if(action["data"]["button_state"] != "PRESSED"):
 
             if MODE == MODE_SINGLEPLAYER:
-                debug_print("GM: Ignoring RELEASED PRESS from:" + str(action["from"]))
-
+                br_flag = singleplayer_logic(action)
             else:
-                debug_print("GM: Got RELEASED from :" + str(action["from"]))
-            
-                # if button is logged as pressed, lose_game 
-                if(pressed[action["from"]]):
-                    debug_print("GM: from : " + str(action["from"]) + " button was active and now it was released. ")
-                    WrongButtonPress()
-                    break; # do not process next actions as game is lost
-            continue;
+                br_flag = multiplayer_logic(action)
 
-        # skip if for some reason this button action does not involve you
-        if action["to"] != my_unit_id: continue;
+        # game is lost. There is no need to process the other button actions ( if those exist )
+        if br_flag :
+            break;
 
         if action["from"] == gunits[cunit_index]:
             debug_print("GM: Correct Button Press from :" + str(action["from"]))
             CorrectButtonPress();
-        
+    
         elif action["from"] == gunits[cred_index]:
             debug_print("GM: InCorrect Button Press from :" + str(action["from"]))
-            debug_print("GM: Expected Button Press from :" + str(gunits[cred_index]))
+            debug_print("GM: Expected Button Press from :" + str(gunits[cunit_index]))
             WrongButtonPress();
-                
+            br_flag = True;
 
-
+        # game is lost. There is no need to process the other button actions ( if those exist )
+        if br_flag :
+            break;
+    
     return;
 
 # handle available tasks / filter button events if needed.
@@ -637,21 +713,32 @@ def GameHandleTasks(tasks):
     return actions;
 
 def my_unit_exit():
+    global ser;
+    
     ledControl(my_unit_id, LED_AMBER, LED_OFF)
     ledControl(my_unit_id, LED_RED, LED_OFF)
     ledControl(my_unit_id, LED_GREEN, LED_OFF)
     GameUnregister();
     time.sleep(SERIAL_CLOSE_TIMEOUT);
-    ser.close();
+    if(DEVICE_CONN): ser.close();
 
 
 # ENTRY POINT
 def main():
-    ser = serial.Serial('/dev/ttyACM0',9600)
+    global gstate;
+    global ser;
     parse_argv();
     debug_print("Parsed Arguments");
-    initGateway();
-    debug_print("Gateway Initialized");
+
+    
+    if(DEVICE_CONN):
+        ser = serial.Serial('/dev/ttyACM0',9600)
+        sendToDevice(42); # CLOSE ALL LEDS
+    
+    
+    if(DEVICE_CONN): 
+        initGateway();
+        debug_print("Gateway Initialized");
     
     try:
         GameRegister()
@@ -675,13 +762,14 @@ def main():
     # MAIN LOOP
     while(True):
         try:
+            if gstate == STATE_EXIT: break;
+            
             tasks = GameGetTasks()
             actions = GameHandleTasks(tasks)
             if game_control:
                 handleGameButtonPress(actions)
 
-            if gstate == STATE_EXIT:
-                break;
+
         
         except (KeyboardInterrupt, SystemExit, Exception) as err:
             debug_print("ERROR: Gameplay Error:")

@@ -1,0 +1,149 @@
+ - DEBUG: Game Start | Active Game Logic : s
+ - DEBUG: Parsed Arguments
+ - DEBUG: Gateway Initialized
+ - DEBUG: Gateway Active
+ - DEBUG: Registered to Game
+ - DEBUG: Got Initial Unit List
+ - DEBUG: T_GM: Inacting Temporal Master
+ - DEBUG: T_GM:Temporal Master Idle Loop Active
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 20731
+ - DEBUG: Change led COLOR: AMBER | iid: 20731
+ - DEBUG: Change led STATE: ON | iid: 20731
+ - DEBUG: Instruction to Device: 12 | iid: 20731
+ - DEBUG: Sent: 12 | iid: 20731
+ - DEBUG: T_GM: Next index
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 18580
+ - DEBUG: Change led COLOR: AMBER | iid: 18580
+ - DEBUG: Change led STATE: OFF | iid: 18580
+ - DEBUG: Instruction to Device: 8 | iid: 18580
+ - DEBUG: Sent: 8 | iid: 18580
+ - DEBUG: Received New Task
+ - DEBUG: Processing: BUTTON_CHANGE
+ - DEBUG: T_GM: Next index
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 55362
+ - DEBUG: Change led COLOR: AMBER | iid: 55362
+ - DEBUG: Change led STATE: ON | iid: 55362
+ - DEBUG: Instruction to Device: 12 | iid: 55362
+ - DEBUG: Sent: 12 | iid: 55362
+ - DEBUG: T_GM: Next index
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 14325
+ - DEBUG: Change led COLOR: AMBER | iid: 14325
+ - DEBUG: Change led STATE: OFF | iid: 14325
+ - DEBUG: Instruction to Device: 8 | iid: 14325
+ - DEBUG: Sent: 8 | iid: 14325
+ - DEBUG: T_GM: Next index
+ - DEBUG: T_GM: Next index
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 99521
+ - DEBUG: Change led COLOR: AMBER | iid: 99521
+ - DEBUG: Change led STATE: ON | iid: 99521
+ - DEBUG: Instruction to Device: 12 | iid: 99521
+ - DEBUG: Sent: 12 | iid: 99521
+ - DEBUG: T_GM: Next index
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 37486
+ - DEBUG: Change led COLOR: AMBER | iid: 37486
+ - DEBUG: Change led STATE: OFF | iid: 37486
+ - DEBUG: Instruction to Device: 8 | iid: 37486
+ - DEBUG: Sent: 8 | iid: 37486
+ - DEBUG: T_GM: Next index
+ - DEBUG: T_GM: Next index
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 10195
+ - DEBUG: Change led COLOR: AMBER | iid: 10195
+ - DEBUG: Change led STATE: ON | iid: 10195
+ - DEBUG: Instruction to Device: 12 | iid: 10195
+ - DEBUG: Sent: 12 | iid: 10195
+ - DEBUG: T_GM: Next index
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 74214
+ - DEBUG: Change led COLOR: AMBER | iid: 74214
+ - DEBUG: Change led STATE: OFF | iid: 74214
+ - DEBUG: Instruction to Device: 8 | iid: 74214
+ - DEBUG: Sent: 8 | iid: 74214
+ - DEBUG: T_GM: Next index
+ - DEBUG: T_GM: Next index
+ - DEBUG: T_GM: Next index
+ - DEBUG: T_GM: Next index
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 15025
+ - DEBUG: Change led COLOR: AMBER | iid: 15025
+ - DEBUG: Change led STATE: ON | iid: 15025
+ - DEBUG: Instruction to Device: 12 | iid: 15025
+ - DEBUG: Sent: 12 | iid: 15025
+ - DEBUG: T_GM: Next index
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 50955
+ - DEBUG: Change led COLOR: AMBER | iid: 50955
+ - DEBUG: Change led STATE: OFF | iid: 50955
+ - DEBUG: Instruction to Device: 8 | iid: 50955
+ - DEBUG: Sent: 8 | iid: 50955
+ - DEBUG: T_GM: Re-Looping
+ - DEBUG: T_GM: Next index
+ - DEBUG: T_GM: Next index
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 31561
+ - DEBUG: Change led COLOR: AMBER | iid: 31561
+ - DEBUG: Change led STATE: ON | iid: 31561
+ - DEBUG: Instruction to Device: 12 | iid: 31561
+ - DEBUG: Sent: 12 | iid: 31561
+ - DEBUG: G-Way: Got: 1
+ - DEBUG: Button Press when AMBER is ON
+ - DEBUG: G-Way: Got: 0
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: START
+ - DEBUG: Set Game Master To unit_id: 4279
+ - DEBUG: Starting A New Game and Inacting Game Master
+ - DEBUG: Updated List of Units
+ - DEBUG: Game Unit Order [1224, 5000, 4279, 4050]
+ - DEBUG: GM: In wait_state | fid: 95819
+ - DEBUG: GM: AMBER unit index: 5000 | fid: 95819
+ - DEBUG: GM: RED unit index: 1224 | fid: 95819
+ - DEBUG: T_GM: Next index
+ - DEBUG: T_GM:Temporal Master Idle Loop exit
+ - DEBUG: GM: Correct Unit Index not pressed, Game Over. | fid: 95819
+ - DEBUG: GM: Initiating Game Lost Sequence
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_SOUND
+ - DEBUG: Play Sound Task for : 4279 | iid: 23118
+ - DEBUG: Play Sound: LOSE | iid: 23118
+ - DEBUG: Sent: 128 | iid: 23118
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 55449
+ - DEBUG: Change led COLOR: RED | iid: 55449
+ - DEBUG: Change led STATE: ON | iid: 55449
+ - DEBUG: Instruction to Device: 48 | iid: 55449
+ - DEBUG: Sent: 48 | iid: 55449
+ - DEBUG: Received New Task
+ - DEBUG: Processing: CHANGE_LED
+ - DEBUG: Change Led Task for : 4279 | iid: 87398
+ - DEBUG: Change led COLOR: RED | iid: 87398
+ - DEBUG: Change led STATE: OFF | iid: 87398
+ - DEBUG: Instruction to Device: 32 | iid: 87398
+ - DEBUG: Sent: 32 | iid: 87398
+ - DEBUG: Received New Task
+ - DEBUG: Processing: PLAY_GAME
+ - DEBUG: Got Game State: STOP
+ - DEBUG: Pospone Exit thread Active
+ - DEBUG: Unit Exit

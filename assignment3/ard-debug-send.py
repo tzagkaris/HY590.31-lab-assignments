@@ -3,7 +3,7 @@ import threading
 import time
 import sys
 
-#serial.Serial.timeout = None;
+serial.Serial.timeout = None;
 
 ser = serial.Serial('/dev/ttyACM0',9600)
 
@@ -16,8 +16,8 @@ ser = serial.Serial('/dev/ttyACM0',9600)
 #threading.Thread(target=hello, args=(1, ), daemo)
 #time.sleep(100)
 
-ser.write(bytes(chr(32).encode("ascii")))
-
+ser.write(bytes(chr(int(sys.argv[1])).encode("ascii")))
+time.sleep(0.25);
 ser.close();
 #while(True):
 #    read = ser.read(); # blocking call
