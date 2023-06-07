@@ -600,7 +600,7 @@ def wait_state():
     debug_print("GM: AMBER unit: " + str(gunits[local_index_copy]) + " | fid: " + str(fid))
     
     debug_print("Local index copy is: " + str(local_index_copy))
-    sys.stdout.flush();
+    #sys.stdout.flush();
 
     if pressed[local_index_copy]:
         game_won(); # do winning staff 
@@ -735,7 +735,8 @@ def handleGameButtonPress(actions):
 
         # handle button release
         if(action["data"]["button_state"] == BUTTON_RELEASED):
-
+            debug_print("GM: Handling Button Release from: " + str(action["from"]));
+            
             if MODE == MODE_SINGLEPLAYER:
                 br_flag = singleplayer_logic(action)
             else:
@@ -743,8 +744,7 @@ def handleGameButtonPress(actions):
         
         # handle button press
         else:
-            debug_print("GM: Handling Button Press from" + str(action["from"]));
-            
+            debug_print("GM: Handling Button Press from: " + str(action["from"]));
             br_flag = handleBPressed(action);
     
     return;
