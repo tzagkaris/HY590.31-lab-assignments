@@ -64,6 +64,9 @@ SERIAL_CLOSE_TIMEOUT = 10;
 # serial connection info
 ser = None;
 
+# idle loop thread
+lthread = None;
+
 # The current state of the game
 game_control = 0;
 amber_state = LED_OFF;
@@ -74,7 +77,7 @@ pressed = None;     # mark pressed/completed units
 cunit_index = None; # the index of the unit we are waiting for click event
 cred_index = None;  # the index of the button not to press
 start_flag = False;
-
+no_cred_index = False;
 
 cOFFdict = {
     "GREEN": 2,
@@ -117,6 +120,11 @@ def parse_argv():
             case _: 
                 raise Exception("Argument Parsing Error");
 
+def allAmberOff():
+    global gunits;
+
+    for u in gunits:
+        ledControl(u, LED_AMBER, LED_OFF)
 
 # SPECIAL CASE: IF on STATE_IDLE and AMBER LIGHT is ON
 # button press will set me as GAME MASTER and will START a new game.
@@ -125,9 +133,19 @@ def GameButtonPress(button_state):
     global amber_state;
     global game_master_id;
     global start_flag;
+    global lthread;
 
     if (gstate == STATE_IDLE) and (amber_state == LED_ON) and (not start_flag):
         debug_print("Button Press when AMBER is ON")
+        
+        # if you were Temporal game master, stop the idle thread and close all AMBER lights
+        # NEW STAFF 07  
+        if(lthread):
+            debug_print("Awaiting idle loop exit")
+            allAmberOff(); # make sure all AMBER lights are off
+            gstate = STATE_WAIT;
+            time.sleep(0.5)
+        
         StartNewGame()
         start_flag = True;
         return;
@@ -218,8 +236,10 @@ def onlyMeRegistered():
     return False;
 
 def init_temporal():
-    th = threading.Thread(target=idle_loop, args=( ))
-    th.start();
+    global lthread;
+
+    lthread = threading.Thread(target=idle_loop, args=( ))
+    lthread.start();
 
 # __ONLY__ WHEN GAME CONTROL IS ACTIVE 
 # start a new game, 
@@ -287,6 +307,9 @@ def idle_loop():
             # sleep for some time then check if out of IDLE STATE
             time.sleep(IDLE_TIMEOUT)
             
+            if(gstate != STATE_IDLE): 
+                break;   
+
             ledControl(gunits[index], LED_AMBER, LED_OFF)
  
             debug_print("T_GM: Next index");
@@ -300,9 +323,17 @@ def idle_loop():
         
         # TEMP REMOVE ME
         # --------------
-        temp_counter = temp_counter + 1;
-        if(temp_counter == 5):
-            StartNewGame()
+        # Start Game without the press of button
+        #temp_counter = temp_counter + 1;
+        #if(temp_counter == 3):
+        #    
+        #    debug_print("Awaiting idle loop exit")
+        #    allAmberOff(); # make sure all AMBER lights are off
+        #    gstate = STATE_WAIT;
+        #    #lthread.join(); # wait for IDLE LOOP thread to exit 
+        #    time.sleep(0.5)
+        #    
+        #    StartNewGame()
         # TEMP REMOVE ABOVE
         # --------------
 
@@ -454,6 +485,14 @@ def handleChangeLed(task):
 
     debug_print("Sent: " + str(instruction) + " | iid: " + str(iid) )
 
+    # TEMP REMOVE ME 
+    # --------------
+    # simulate button click 
+    #if (amber_state == LED_ON) and (gstate == STATE_WAIT):
+    #    time.sleep(1)
+    #    GameButtonPress(BUTTON_PRESSED)
+    # --------------
+    # TEMP REMOVE ABOVE
     
     return;
 
@@ -520,7 +559,8 @@ def handle_red(fid):
     global gunits;
     global cunit_index;
     global cred_index;
-    cred_index = 9090; # default red index, handles a specific condition
+    global no_cred_index;
+    #cred_index = 9090; # default red index, handles a specific condition
 
     # do not draw random unit for red if all units except one are pressed
     if not (len(gunits) - sum(pressed) == 1): 
@@ -532,7 +572,8 @@ def handle_red(fid):
         ledControl(gunits[cred_index], LED_RED, LED_ON)
         debug_print("GM: RED unit: " + str(gunits[cred_index]) + " | fid: " + str(fid))
     else:
-        debug_print("GM: No Red Unit Pick. Using Default." + " | fid: " + str(fid))
+        debug_print("GM: No Red Unit Pick. Toggling no_cred_index." + " | fid: " + str(fid))
+        no_cred_index = True;
     return;
 
 # __ONLY__ WHEN UNIT IS THE GAME MASTER 
@@ -544,7 +585,6 @@ def wait_state():
     global gunits;
     global cunit_index;
     global pressed;
-    global cred_index;
     global gstate;
 
     # next unit
@@ -558,6 +598,9 @@ def wait_state():
     local_index_copy = cunit_index; 
 
     debug_print("GM: AMBER unit: " + str(gunits[local_index_copy]) + " | fid: " + str(fid))
+    
+    debug_print("Local index copy is: " + str(local_index_copy))
+    sys.stdout.flush();
 
     if pressed[local_index_copy]:
         game_won(); # do winning staff 
@@ -592,7 +635,7 @@ def CorrectButtonPress():
 
     # close wait state lighrs
     ledControl(gunits[cunit_index], LED_AMBER, LED_OFF)
-    ledControl(gunits[cred_index], LED_RED, LED_OFF)
+    if( not no_cred_index): ledControl(gunits[cred_index], LED_RED, LED_OFF)
 
     if(gstate == STATE_WAIT):
         th = threading.Thread(target=wait_state, args=( ))
@@ -606,9 +649,10 @@ def WrongButtonPress():
     global gunits;
     global cunit_index;
     global cred_index;
+    global no_cred_index;
     # close wait state lighrs
     ledControl(gunits[cunit_index], LED_AMBER, LED_OFF)
-    ledControl(gunits[cred_index], LED_RED, LED_OFF)
+    if(not no_cred_index): ledControl(gunits[cred_index], LED_RED, LED_OFF)
 
     game_lost()
     StopGame()
@@ -618,7 +662,6 @@ def singleplayer_logic(action):
     global gstate;
     global cunit_index;
     global gunits;
-    global cred_index;
     global pressed;
 
     debug_print("GM: Ignoring RELEASED PRESS from:" + str(action["from"]))
@@ -629,7 +672,6 @@ def multiplayer_logic(action):
     global gstate;
     global cunit_index;
     global gunits;
-    global cred_index;
     global pressed;
     
     debug_print("GM: Got RELEASED from :" + str(action["from"]))
@@ -643,14 +685,19 @@ def multiplayer_logic(action):
     return False; # ignore release
 
 def handleBPressed(action):
-        
+
+    global cred_index;
+    global cunit_index;
+    global no_cred_index;
+    global gunits;
+
     # handle button press ( works on both difficulties)
     if action["from"] == gunits[cunit_index]:
         debug_print("GM: Correct Button Press from :" + str(action["from"]))
         CorrectButtonPress();
         return False;
 
-    elif action["from"] == gunits[cred_index]:
+    elif (not no_cred_index) and (action["from"] == gunits[cred_index]):
         debug_print("GM: InCorrect Button Press from :" + str(action["from"]))
         debug_print("GM: Expected Button Press from :" + str(gunits[cunit_index]))
         WrongButtonPress();
@@ -696,6 +743,8 @@ def handleGameButtonPress(actions):
         
         # handle button press
         else:
+            debug_print("GM: Handling Button Press from" + str(action["from"]));
+            
             br_flag = handleBPressed(action);
     
     return;
